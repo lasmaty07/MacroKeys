@@ -1,11 +1,9 @@
-import serial
-import pyautogui
+import serial,win32api, pyautogui, math
 from pycaw.pycaw import AudioUtilities, ISimpleAudioVolume ,IAudioEndpointVolume
-
 from ctypes import cast, POINTER
 from comtypes import CLSCTX_ALL
-import math
 from win10toast import ToastNotifier
+from win32con import VK_MEDIA_NEXT_TRACK,VK_MEDIA_PREV_TRACK,VK_MEDIA_PLAY_PAUSE, KEYEVENTF_EXTENDEDKEY
 
 times = 50
 aState = False
@@ -123,12 +121,14 @@ while times>0:
       print("sState: " + str(sState))
     if ( q =='1' and qState == False):
       qState = True
+      win32api.keybd_event(VK_MEDIA_PLAY_PAUSE, 0, KEYEVENTF_EXTENDEDKEY, 0)
       print("qState: " + str(qState))
     if ( q != '1' and qState == True):
       qState = False
       print("qState: " + str(qState))
     if ( w =='1' and wState == False):
       wState = True
+      win32api.keybd_event(VK_MEDIA_NEXT_TRACK, 0, KEYEVENTF_EXTENDEDKEY, 0)
       print("wState: " + str(wState))
     if ( w != '1' and wState == True):
       wState = False
@@ -147,7 +147,7 @@ while times>0:
       masterVol = not(masterVol)
       if masterVol:
         toaster = ToastNotifier()
-        toaster.show_toast("Controling Mater Volume","Red knob controls the volume",threaded=True,icon_path="vol.ico",duration=2)
+        toaster.show_toast("Controling Master Volume","Red knob controls the volume",threaded=True,icon_path="vol.ico",duration=2)
       print("rState: " + str(rState))
     if ( r != '1' and rState == True):
       rState = False
@@ -156,16 +156,16 @@ while times>0:
     if masterVol:
       set_master_volume(p1)
 
-    if ( f=='1' and eState == False):
-      eState = True
+    if ( f=='1' and fState == False):
+      fState = True
       appVol = not appVol
-      if masterVol:
+      if appVol:
         toaster = ToastNotifier()
         toaster.show_toast("Controling "+ "Spotify.exe" +" Volume","Yellow knob controls the volume",threaded=True,icon_path="vol.ico",duration=2)
-      print("eState: " + str(eState))
-    if ( f != '1' and eState == True):
-      eState = False      
-      print("eState: " + str(eState))
+      print("fState: " + str(fState))
+    if ( f != '1' and fState == True):
+      fState = False      
+      print("fState: " + str(fState))
 
     if appVol:
       setVol("Spotify.exe",p2)
