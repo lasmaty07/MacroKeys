@@ -4,15 +4,16 @@
 
 //#include <Keyboard.h>
 
-const int A = 2;
-const int S = 4;
-const int D = 6;
+const int A = 12;
+const int S = 11;
+const int D = 10;
 const int F = 8;
-const int Q = 3;
-const int W = 5;
-const int E = 7;
-const int R = 9;
-const int P = 1;
+const int Q = 9;
+const int W = 7;
+const int E = 6;
+const int R = 5;
+const int P1 = 1;
+const int P2 = 0;
 
 bool a = false;
 bool s = false;
@@ -23,7 +24,8 @@ bool w = false;
 bool e = false;
 bool r = false;
 
-int val = 0;
+int pote1 = 0;
+int pote2 = 0;
 
 void setup() {
   // put your setup code here, to run once:
@@ -38,7 +40,8 @@ void setup() {
   pinMode(W, INPUT_PULLUP);
   pinMode(E, INPUT_PULLUP);
   pinMode(R, INPUT_PULLUP);
-  pinMode(P, INPUT);
+  pinMode(P1, INPUT);
+  pinMode(P2, INPUT);
 
 }
 
@@ -86,8 +89,10 @@ void loop() {
     r = false;
   }
 
-    val = analogRead(P);
-    val = map(val, 0, 1023, 0, 1000);
+    pote1 = analogRead(P1);
+    pote1 = map(pote1, 0, 1023, 0, 100);
+    pote2 = analogRead(P2);
+    pote2 = map(pote2, 0, 1023, 0, 100);
 
     Serial.print(a);Serial.print("|");
     Serial.print(s);Serial.print("|");
@@ -97,6 +102,7 @@ void loop() {
     Serial.print(w);Serial.print("|");
     Serial.print(e);Serial.print("|");
     Serial.print(r);Serial.print("|");
-    Serial.println(val);
-  delay(150);
+    Serial.print(pote1);Serial.print("|");
+    Serial.println(pote2);
+  delay(50);
 }
